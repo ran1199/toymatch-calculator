@@ -1,0 +1,480 @@
+/* ToyMatch Time & Value Calculator: one stylesheet.
+   Colors, spacing and sizes are set once here as variables. */
+
+:root {
+  /* Color */
+  --color-text: #1a1f24;
+  --color-text-muted: #4a5561; /* 7.4:1 on white */
+  --color-bg: #ffffff;
+  --color-surface: #f6f7f8;
+  --color-border: #d5d9de;
+  --color-border-strong: #8a949e; /* input borders: 3:1+ against white */
+  --color-accent: #0b5d63; /* deep teal, 7.6:1 on white */
+  --color-accent-hover: #084a4f;
+  --color-accent-tint: #e7f2f2;
+  --color-error: #b42318; /* 6.1:1 on white */
+  --color-error-tint: #fdf1f0;
+  --color-warning: #8a4b00; /* 6.6:1 on white */
+  --color-warning-tint: #fdf5e8;
+  --color-focus: #0b5d63;
+
+  /* Type */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif;
+  --text-base: 1rem; /* 16px minimum body */
+  --text-lg: 1.125rem;
+  --text-xl: 1.5rem;
+  --text-2xl: clamp(1.75rem, 1.4rem + 1.5vw, 2.25rem);
+  --text-value: 1.625rem;
+  --text-value-primary: 2.5rem;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+
+  /* Shape */
+  --radius: 10px;
+  --radius-small: 8px;
+  --shadow-soft: 0 1px 2px rgba(16, 24, 40, 0.04), 0 2px 8px rgba(16, 24, 40, 0.04);
+  --tap-size: 44px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+p,
+dl,
+dd,
+ul {
+  margin: 0;
+}
+
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.icon {
+  width: 1.25em;
+  height: 1.25em;
+  flex: none;
+}
+
+/* ---------- Page frame ---------- */
+
+.page {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4) var(--space-7);
+}
+
+@media (min-width: 600px) {
+  .page {
+    padding-inline: var(--space-6);
+  }
+}
+
+.masthead {
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--space-6);
+}
+
+.masthead__name {
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.intro {
+  max-width: 44rem;
+  margin-bottom: var(--space-6);
+}
+
+.intro h1 {
+  font-size: var(--text-2xl);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-3);
+}
+
+.intro__description {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-3);
+}
+
+.intro__notice {
+  color: var(--color-text-muted);
+}
+
+.section-heading {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  margin-bottom: var(--space-4);
+}
+
+/* ---------- Layout: stacked on mobile, two columns from 900px ---------- */
+
+.layout {
+  display: grid;
+  gap: var(--space-6);
+}
+
+@media (min-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: var(--space-7);
+    align-items: start;
+  }
+
+  .results-column {
+    position: sticky;
+    top: var(--space-5);
+  }
+}
+
+/* ---------- Inputs ---------- */
+
+.inputs {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.field__label {
+  font-weight: 600;
+}
+
+.field__help,
+.field__note {
+  color: var(--color-text-muted);
+}
+
+.field__note {
+  padding-left: var(--space-3);
+  border-left: 3px solid var(--color-border);
+}
+
+.field__control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.field__input {
+  width: 9rem;
+  min-height: 48px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-small);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--text-lg);
+  font-variant-numeric: tabular-nums;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.field__input:hover {
+  border-color: var(--color-text);
+}
+
+.field__input:focus-visible {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent), 0 0 0 5px var(--color-accent-tint);
+}
+
+.field__unit {
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.field__unit--before {
+  min-width: 0.75em;
+}
+
+/* Error: thicker red border, tinted background and a message with an icon */
+.field--error .field__input {
+  border: 2px solid var(--color-error);
+  background: var(--color-error-tint);
+}
+
+.field--error .field__input:focus-visible {
+  box-shadow: 0 0 0 3px var(--color-error), 0 0 0 5px var(--color-error-tint);
+}
+
+.field__error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-error);
+  font-weight: 600;
+}
+
+/* ---------- Expandable sections ---------- */
+
+.disclosure {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-bg);
+}
+
+.disclosure__summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--tap-size);
+  padding: var(--space-3) var(--space-4);
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  border-radius: var(--radius);
+}
+
+.disclosure__summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Our own arrow, rotating when open */
+.disclosure__summary::before {
+  content: "";
+  width: 0.5em;
+  height: 0.5em;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 0.15s ease;
+  flex: none;
+  margin-right: var(--space-1);
+}
+
+.disclosure[open] > .disclosure__summary::before {
+  transform: rotate(45deg);
+}
+
+.disclosure__summary:hover {
+  background: var(--color-surface);
+}
+
+.disclosure__body {
+  display: grid;
+  gap: var(--space-5);
+  padding: var(--space-2) var(--space-4) var(--space-5);
+}
+
+/* ---------- Buttons ---------- */
+
+.button {
+  justify-self: start;
+  min-height: var(--tap-size);
+  padding: var(--space-2) var(--space-5);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-small);
+  background: var(--color-bg);
+  color: var(--color-accent);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: var(--color-accent-tint);
+}
+
+/* ---------- Results ---------- */
+
+.results {
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.cards {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.card {
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+  background: var(--color-bg);
+  box-shadow: var(--shadow-soft);
+}
+
+.card__label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.card__value {
+  font-size: var(--text-value);
+  font-weight: 650;
+  line-height: 1.25;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ToyMatch takes longer: a clearly different card, label and icon */
+.card--extra {
+  border: 2px solid var(--color-warning);
+  background: var(--color-warning-tint);
+}
+
+.card--extra .card__label {
+  color: var(--color-warning);
+  font-weight: 700;
+}
+
+/* Net value: the most prominent card */
+.card--primary {
+  border: 2px solid var(--color-accent);
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+.card--primary .card__label {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.card--primary .card__value {
+  font-size: var(--text-value-primary);
+}
+
+.notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-small);
+  border: 1px solid var(--color-border);
+  border-left-width: 4px;
+  background: var(--color-bg);
+}
+
+.notice .icon {
+  margin-top: 0.125em;
+}
+
+.notice--positive {
+  border-left-color: var(--color-accent);
+}
+
+.notice--positive .icon {
+  color: var(--color-accent);
+}
+
+.notice--zero {
+  border-left-color: var(--color-text-muted);
+}
+
+.notice--negative {
+  border-color: var(--color-warning);
+  border-left-color: var(--color-warning);
+  background: var(--color-warning-tint);
+}
+
+.notice--negative .icon,
+.notice--warning .icon {
+  color: var(--color-warning);
+}
+
+.notice--warning {
+  border-color: var(--color-error);
+  border-left-color: var(--color-error);
+  background: var(--color-error-tint);
+  font-weight: 600;
+}
+
+.notice--warning .icon {
+  color: var(--color-error);
+}
+
+.notice--info {
+  border-left-color: var(--color-accent);
+}
+
+.notice--info .icon {
+  color: var(--color-accent);
+}
+
+.results__disclaimer {
+  margin-top: var(--space-4);
+  color: var(--color-text-muted);
+}
+
+/* ---------- How this is calculated ---------- */
+
+.how {
+  margin-top: var(--space-7);
+  max-width: 52rem;
+}
+
+.formulas {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.formulas dt {
+  font-weight: 600;
+}
+
+.formulas dd {
+  color: var(--color-text-muted);
+}
+
+.how__subheading {
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.how__list {
+  padding-left: var(--space-5);
+  display: grid;
+  gap: var(--space-1);
+  color: var(--color-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
+
+/* Inside the inputs form the grid gap already spaces the heading */
+.inputs > .section-heading {
+  margin-bottom: 0;
+}

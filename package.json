@@ -1,0 +1,29 @@
+{
+  "name": "toymatch-calculator",
+  "private": true,
+  "version": "1.0.0",
+  "description": "ToyMatch Time & Value Calculator: estimates whether the ToyMatch annual subscription is worth it for your gift-shopping habits.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "demo:record": "playwright test -c demo/playwright.config.ts && node demo/convert-to-mp4.mjs"
+  },
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.1"
+  }
+}
